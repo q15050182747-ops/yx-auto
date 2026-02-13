@@ -318,8 +318,12 @@ export default {
         if (url.hostname === '3xui.xlihf.top') {
             const targetUrl = `http://192.227.232.131:2053${url.pathname}${url.search}`;
             
-            // 创建新的请求，不修改 Host 头
+            // 创建新的请求头，移除 Cloudflare 相关头
             const headers = new Headers(request.headers);
+            headers.delete('cf-connecting-ip');
+            headers.delete('cf-ray');
+            headers.delete('cf-visitor');
+            headers.set('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36');
             
             try {
                 const response = await fetch(targetUrl, {
