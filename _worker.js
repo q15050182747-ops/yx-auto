@@ -320,7 +320,8 @@ export default {
             
             // 创建新的请求头
             const headers = new Headers(request.headers);
-            headers.delete('Host'); // 删除 Host 头，使用 IP 直接访问
+            headers.set('Host', '192.227.232.131:2053');
+            headers.set('X-Real-IP', request.headers.get('CF-Connecting-IP') || '');
             
             try {
                 const response = await fetch(targetUrl, {
