@@ -314,15 +314,13 @@ export default {
     async fetch(request) {
         const url = new URL(request.url);
         
-        // 代理 3xui.xlihf.top 到服务器 8080 端口
+        // 代理 3xui.xlihf.top 到服务器 2053 端口
         if (url.hostname === '3xui.xlihf.top') {
-            const targetUrl = `http://192.227.232.131:8080${url.pathname}${url.search}`;
+            const targetUrl = `http://192.227.232.131:2053${url.pathname}${url.search}`;
             
             // 创建新的请求头
             const headers = new Headers(request.headers);
-            headers.set('Host', '3xui.xlihf.top');
-            headers.set('X-Forwarded-For', request.headers.get('CF-Connecting-IP') || '');
-            headers.set('X-Real-IP', request.headers.get('CF-Connecting-IP') || '');
+            headers.delete('Host'); // 删除 Host 头，使用 IP 直接访问
             
             try {
                 const response = await fetch(targetUrl, {
