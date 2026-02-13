@@ -318,10 +318,8 @@ export default {
         if (url.hostname === '3xui.xlihf.top') {
             const targetUrl = `http://192.227.232.131:2053${url.pathname}${url.search}`;
             
-            // 创建新的请求头
+            // 创建新的请求，不修改 Host 头
             const headers = new Headers(request.headers);
-            headers.set('Host', '192.227.232.131:2053');
-            headers.set('X-Real-IP', request.headers.get('CF-Connecting-IP') || '');
             
             try {
                 const response = await fetch(targetUrl, {
